@@ -16,7 +16,7 @@ class TbFornecedor(models.Model):
     id_fornecedor = models.AutoField(db_column='id_fornecedor', primary_key=True)  # Field name made lowercase.
     nome_empresa = models.TextField(db_column='nome_empresa')  # Field name made lowercase.
     tipo_empresa = models.TextField(db_column='tipo_empresa', blank=True, null=True)  # Field name made lowercase.
-    data_cadastro = models.DateField(db_column='data_cadastro')  # Field name made lowercase.
+    data_cadastro = models.DateField(db_column='data_cadastro', auto_now_add=True)  # Field name made lowercase.
 
     class Meta:        
         db_table = 'tb_fornecedor'
@@ -40,7 +40,7 @@ class TbProduto(models.Model):
     marca = models.TextField(db_column='marca', blank=True, null=True)  # Field name made lowercase.
     cor = models.TextField(db_column='cor', blank=True, null=True)  # Field name made lowercase.
     id_fornecedor = models.ForeignKey(TbFornecedor, models.DO_NOTHING, db_column='id_fornecedor')  # Field name made lowercase.
-    data_cadastro = models.DateField(db_column='data_cadastro')  # Field name made lowercase.
+    data_cadastro = models.DateField(db_column='data_cadastro', auto_now_add=True)  # Field name made lowercase.
     estoque = models.IntegerField(db_column='estoque')  # Field name made lowercase.
     imagem = models.CharField(db_column='imagem', max_length=300, blank=True, null=True)  # Field name made lowercase.
 
