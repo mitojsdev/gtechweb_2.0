@@ -1,0 +1,35 @@
+{% extends 'gtechwebs/base.html' %}
+
+{% block title %}Clientes - Gtech Web Control{% endblock %}
+
+{% block content %}
+    <main>
+        <h1>Clientes</h1>
+        <p>Veja a lista de clientes cadastrados no sistema.</p>
+        <a href="{% url 'new_cliente' %}">Adicionar cliente</a>
+        {% if clientes %}
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Telefone</th>
+                        <th>Data de Cadastro</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cliente in clientes %}
+                        <tr data-id="{{ cliente.id_cliente }}">
+                            <td>{{ cliente.nome }}</td>
+                            <td>{{ cliente.telefone }}</td>
+                            <td>{{ cliente.data_cadastro|date:"d/m/Y" }}</td>
+                            <td><a href="{% url 'edit_cliente' cliente.id_cliente %}">Editar</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Nenhum cliente cadastrado.</p>
+        {% endif %}
+    </main>
+{% endblock %}

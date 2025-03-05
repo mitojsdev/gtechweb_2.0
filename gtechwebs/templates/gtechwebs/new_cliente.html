@@ -1,0 +1,16 @@
+{% extends 'gtechwebs/base.html' %}
+
+
+{% block title %}Cadastrar Cliente - Gtech Web Control{% endblock %}
+
+{% block content %}
+    <main>
+        <h1>Cadastrar Cliente</h1>
+        <p>Preencha o formulário abaixo para cadastrar um novo cliente.</p>
+        <form method="post" action="{% url 'new_cliente' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Cadastrar</button>
+        </form>
+    </main>
+{% endblock %}

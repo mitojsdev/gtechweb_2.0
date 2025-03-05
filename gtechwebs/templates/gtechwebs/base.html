@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gtech Web Control</title>
+    <style>
+        body {
+            font-family: Montserrat, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        /* Estilização do menu lateral */
+        .menu {
+            width: 250px;
+            height: 100vh;
+            background-color: #333;
+            color: white;
+            position: fixed;
+            left: 0;
+            top: 0;
+            padding-top: 60px;
+        }
+
+        .menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .menu ul li {
+            padding: 15px;
+            cursor: pointer;
+            border-bottom: 1px solid #444;
+        }
+
+        .menu ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+        }
+
+        .menu ul li:hover {
+            background-color: #444;
+        }
+
+        .submenu {
+            display: none;
+            background-color: #444;
+        }
+
+        .submenu li {
+            padding-left: 30px;
+        }
+
+        .menu ul li:hover .submenu {
+            display: block;
+        }
+
+        /* Ajuste do conteúdo e cabeçalho */
+        .content-container {
+            margin-left: 250px;
+            width: calc(100% - 250px);
+        }
+
+        /* Cabeçalho ajustado para ocupar toda a horizontal */
+        header {
+            background-color: #11ff007e;
+            color: black;
+            padding: 15px;
+            font-size: 24px;
+            text-align: left;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-sizing: border-box;
+        }
+
+        header a {
+            text-decoration: none;
+            color: black;
+        }
+
+        /* Conteúdo principal */
+        .content {
+            padding: 70px 20px 20px; /* Ajusta para não ficar coberto pelo header */
+        }
+
+        /* Rodapé */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            left: 250px;
+            width: calc(100% - 250px);
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Cabeçalho -->
+    <header>
+        <a href="{% url 'index' %}">Gtech Web Control</a>
+    </header>
+
+    <!-- Menu lateral -->
+    <nav class="menu">
+        <ul>
+            <li><a href="{% url 'clientes' %}">Clientes</a></li>
+            <li><a href="">Fornecedores</a></li>
+            <li>
+                <a href="">Produtos</a>
+                <ul class="submenu">
+                    <li><a href="">Tipos de Produto</a></li>
+                </ul>
+            </li>
+            <li><a href="">Venda</a></li>
+        </ul>
+    </nav>
+
+    <!-- Container do conteúdo -->
+    <div class="content-container">
+        <div class="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+
+        <!-- Rodapé -->
+        <footer>
+            &copy; 2025 Gtech Imports - Todos os direitos reservados.
+        </footer>
+    </div>
+
+</body>
+</html>

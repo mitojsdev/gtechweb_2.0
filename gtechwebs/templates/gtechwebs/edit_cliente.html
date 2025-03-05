@@ -1,0 +1,15 @@
+{% extends 'gtechwebs/base.html' %}
+
+
+{% block title %}Editar Cliente - Gtech Web Control{% endblock %}
+
+{% block content %}
+    <main>
+        <h1>Editar Cliente</h1>        
+        <form method="post" action="{% url 'edit_cliente' cliente.id_cliente %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Salvar</button>
+        </form>
+    </main>
+{% endblock %}
