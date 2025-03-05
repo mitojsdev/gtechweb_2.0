@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse
 from . forms import ClienteForm
-from . models import TbCliente
+from . models import TbCliente, TbFornecedor
 
 
 # Create your views here.
@@ -42,3 +42,11 @@ def edit_cliente(request, id_cliente):
             return HttpResponseRedirect(reverse('clientes'))
     context = {'cliente': cli, 'form': form}
     return render(request, 'gtechwebs/edit_cliente.html', context)
+
+def fornecedores(request):
+    """Página de fornecedores."""
+    fornecedores = TbFornecedor.objects.all()
+    context = {
+        'fornecedores': fornecedores
+    }
+    return render(request, 'gtechwebs/fornecedores.html', context)

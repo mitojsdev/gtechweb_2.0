@@ -1,0 +1,35 @@
+{% extends 'gtechwebs/base.html' %}
+
+{% block title %}Fornecedores - Gtech Web Control{% endblock %}
+
+{% block content %}
+    <main>
+        <h1>Fornecedores</h1>
+        <p>Veja a lista de fornecedores cadastrados no sistema.</p>
+        <a href="">Adicionar fornecedor</a>
+        {% if fornecedores %}
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Nome Empresa</th>
+                        <th>Tipo Empresa</th>
+                        <th>Data de Cadastro</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for fornecedor in fornecedores %}
+                        <tr data-id="{{ fornecedor.id_fornecedor }}">
+                            <td>{{ fornecedor.nome_empresa }}</td>
+                            <td>{{ fornecedor.tipo_empresa }}</td>
+                            <td>{{ fornecedor.data_cadastro|date:"d/m/Y" }}</td>
+                            <td><a href="">Editar</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Nenhum fornecedor cadastrado.</p>
+        {% endif %}
+    </main>
+{% endblock %}
