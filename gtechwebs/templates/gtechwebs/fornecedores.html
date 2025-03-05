@@ -23,7 +23,7 @@
                             <td>{{ fornecedor.nome_empresa }}</td>
                             <td>{{ fornecedor.tipo_empresa }}</td>
                             <td>{{ fornecedor.data_cadastro|date:"d/m/Y" }}</td>
-                            <td><a href="">Editar</a></td>
+                            <td><a href="{% url 'edit_fornecedor' fornecedor.id_fornecedor%}">Editar</a></td>
                         </tr>
                     {% endfor %}
                 </tbody>

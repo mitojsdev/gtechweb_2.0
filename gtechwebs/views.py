@@ -62,3 +62,16 @@ def new_fornecedor(request):
             return HttpResponseRedirect(reverse('fornecedores'))
     context = {'form': form}
     return render(request, 'gtechwebs/new_fornecedor.html', context)
+
+def edit_fornecedor(request, id_fornecedor):
+    """Página de edição de fornecedores."""
+    fornecedor = TbFornecedor.objects.get(id_fornecedor=id_fornecedor)
+    if request.method != 'POST':
+        form = FornecedorForm(instance=fornecedor)
+    else:
+        form = FornecedorForm(instance=fornecedor, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('fornecedores'))
+    context = {'fornecedor': fornecedor, 'form': form}
+    return render(request, 'gtechwebs/edit_fornecedor.html', context)
