@@ -6,7 +6,7 @@
     <main>
         <h1>Fornecedores</h1>
         <p>Veja a lista de fornecedores cadastrados no sistema.</p>
-        <a href="">Adicionar fornecedor</a>
+        <a href="{% url 'new_fornecedor' %}">Adicionar fornecedor</a>
         {% if fornecedores %}
             <table border="1">
                 <thead>

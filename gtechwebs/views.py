@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse
-from . forms import ClienteForm
+from . forms import ClienteForm, FornecedorForm
 from . models import TbCliente, TbFornecedor
 
 
@@ -50,3 +50,15 @@ def fornecedores(request):
         'fornecedores': fornecedores
     }
     return render(request, 'gtechwebs/fornecedores.html', context)
+
+def new_fornecedor(request):
+    """Página de cadastro de fornecedores."""
+    if request.method != 'POST':
+        form = FornecedorForm()
+    else:
+        form = FornecedorForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('fornecedores'))
+    context = {'form': form}
+    return render(request, 'gtechwebs/new_fornecedor.html', context)

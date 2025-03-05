@@ -1,5 +1,5 @@
 from django import forms
-from .models import TbCliente
+from .models import TbCliente, TbFornecedor
 
 class ClienteForm(forms.ModelForm):
     class Meta:
@@ -9,4 +9,24 @@ class ClienteForm(forms.ModelForm):
         widgets = {
             'nome': forms.TextInput(attrs={'size': '30'}),  # Define o tamanho do input
             'telefone': forms.TextInput(attrs={'size': '15'}),
+        }
+
+class FornecedorForm(forms.ModelForm):
+    TIPO_EMPRESA_CHOICES = [
+        ('fisica', 'Física'),
+        ('digital', 'Digital'),
+        ('outros', 'Outros'),
+    ]
+
+    tipo_empresa = forms.ChoiceField(
+        choices=TIPO_EMPRESA_CHOICES,  # Define as opções disponíveis
+        widget=forms.Select(),  # Usa um widget de seleção (dropdown)
+        label="Tipo de Empresa"  # Define um rótulo opcional
+    )
+
+    class Meta:
+        model = TbFornecedor  # Substitua pelo nome real do seu modelo
+        fields = ['nome_empresa', 'tipo_empresa']
+        widgets = {
+            'nome_empresa': forms.TextInput(attrs={'size': '30'}),
         }

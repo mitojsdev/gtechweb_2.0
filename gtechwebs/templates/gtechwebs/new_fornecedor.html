@@ -1,0 +1,16 @@
+{% extends 'gtechwebs/base.html' %}
+
+
+{% block title %}Cadastrar Fornecedor - Gtech Web Control{% endblock %}
+
+{% block content %}
+    <main>
+        <h1>Cadastrar Fornecedor</h1>
+        <p>Preencha o formulário abaixo para cadastrar um novo fornecedor.</p>
+        <form method="post" action="{% url 'new_fornecedor' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Cadastrar</button>
+        </form>
+    </main>
+{% endblock %}
