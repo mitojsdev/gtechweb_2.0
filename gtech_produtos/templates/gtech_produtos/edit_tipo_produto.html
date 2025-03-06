@@ -1,0 +1,15 @@
+{% extends 'gtechwebs/base.html' %}
+
+
+{% block title %}Editar Tipo de Produto - Gtech Web Control{% endblock %}
+
+{% block content %}
+    <main>
+        <h1>Editar Tipo de Produto</h1>        
+        <form method="post" action="{% url 'edit_tipo_produto' tipo.cod %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Salvar</button>
+        </form>
+    </main>
+{% endblock %}
