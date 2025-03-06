@@ -1,0 +1,16 @@
+{% extends 'gtechwebs/base.html' %}
+
+
+{% block title %}Cadastrar Produto - Gtech Web Control{% endblock %}
+
+{% block content %}
+    <main>
+        <h1>Cadastrar Produto</h1>
+        <p>Preencha o formulário abaixo para cadastrar um novo tipo de produto.</p>
+        <form method="post" action="{% url 'new_produto' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Cadastrar</button>
+        </form>
+    </main>
+{% endblock %}

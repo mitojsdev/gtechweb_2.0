@@ -1,0 +1,49 @@
+{% extends 'gtechwebs/base.html' %}
+
+{% block title %} Produtos - Gtech Web Control{% endblock %}
+
+{% block content %}
+    <main>
+        <h1>Produtos</h1>        
+        <p>Veja a lista de produtos cadastrados</p>
+        <a href="{% url 'new_produto' %}">Adicionar Produto</a>
+        {% if produtos %}
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nome</th>
+                        <th>Preço Custo</th>
+                        <th>Tipo de Produto</th>
+                        <th>Fabricante</th>
+                        <th>Marca</th>
+                        <th>Cor</th>
+                        <th>Fornecedor</th>
+                        <th>Data de Cadastro</th>
+                        <th>Estoque</th>
+                        <th>Ação</th>                       
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for produto in produtos %}
+                        <tr>
+                            <td>{{ produto.id_produto }}</td>
+                            <td>{{ produto.nome }}</td>
+                            <td>{{ produto.preco_custo }}</td>                            
+                            <td>{{ produto.tipo_produto.descricao }}</td>
+                            <td>{{ produto.fabricante }}</td>
+                            <td>{{ produto.marca }}</td>
+                            <td>{{ produto.cor }}</td>
+                            <td>{{ produto.id_fornecedor.nome_empresa }}</td>
+                            <td>{{ produto.data_cadastro|date:"d/m/Y" }}</td>
+                            <td>{{ produto.estoque }}</td>
+                            <td><a href="{% url 'edit_produto' produto.id_produto %}">Editar</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Nenhum produto cadastrado.</p>
+        {% endif %}
+    </main>
+{% endblock %}

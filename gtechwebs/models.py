@@ -22,6 +22,9 @@ class TbFornecedor(models.Model):
         db_table = 'tb_fornecedor'
         unique_together = (('nome_empresa', 'tipo_empresa'),)
 
+    def __str__(self):
+        return self.nome_empresa
+
 class TbTipoProduto(models.Model):
     cod = models.AutoField(db_column='cod', primary_key=True)  # Field name made lowercase.
     descricao = models.TextField(db_column='descricao', unique=True, blank=True, null=True)  # Field name made lowercase.
@@ -29,6 +32,9 @@ class TbTipoProduto(models.Model):
 
     class Meta:        
         db_table = 'tb_tipo_produto'
+
+    def __str__(self):
+        return self.descricao
 
 
 class TbProduto(models.Model):
