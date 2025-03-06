@@ -22,4 +22,4 @@ class ProdutoForm(forms.ModelForm):
                    'cor': forms.TextInput(attrs={'class': 'form-control'}),
                    'id_fornecedor': forms.Select(attrs={'class': 'form-control'}),
                    'estoque': forms.NumberInput(attrs={'class': 'form-control'}),
-                   'imagem': forms.TextInput(attrs={'class': 'form-control'})}
+                   'imagem': forms.ClearableFileInput(attrs={'class': 'form-control'})}

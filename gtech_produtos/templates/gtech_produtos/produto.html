@@ -21,6 +21,7 @@
                         <th>Fornecedor</th>
                         <th>Data de Cadastro</th>
                         <th>Estoque</th>
+                        <th>Imagem</th>
                         <th>Ação</th>                       
                     </tr>
                 </thead>
@@ -37,6 +38,11 @@
                             <td>{{ produto.id_fornecedor.nome_empresa }}</td>
                             <td>{{ produto.data_cadastro|date:"d/m/Y" }}</td>
                             <td>{{ produto.estoque }}</td>
+                            <td>{% if produto.imagem %}
+                                    <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}" width="100">
+                                {% else %}
+                                    <p>Sem imagem</p>
+                                {% endif %}</td>
                             <td><a href="{% url 'edit_produto' produto.id_produto %}">Editar</a></td>
                         </tr>
                     {% endfor %}

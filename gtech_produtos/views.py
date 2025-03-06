@@ -57,7 +57,7 @@ def new_produto(request):
         form = ProdutoForm()
     else:
         # Dados submetidos; processa os dados.
-        form = ProdutoForm(data=request.POST)
+        form = ProdutoForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('produto'))

@@ -48,7 +48,7 @@ class TbProduto(models.Model):
     id_fornecedor = models.ForeignKey(TbFornecedor, models.DO_NOTHING, db_column='id_fornecedor')  # Field name made lowercase.
     data_cadastro = models.DateField(db_column='data_cadastro', auto_now_add=True)  # Field name made lowercase.
     estoque = models.IntegerField(db_column='estoque')  # Field name made lowercase.
-    imagem = models.CharField(db_column='imagem', max_length=300, blank=True, null=True)  # Field name made lowercase.
+    imagem = models.ImageField(upload_to='produtos/', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:        
         db_table = 'tb_produto'
