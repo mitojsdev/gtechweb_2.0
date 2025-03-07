@@ -7,7 +7,7 @@
     <main>
         <h1>Cadastrar Produto</h1>
         <p>Preencha o formulário abaixo para cadastrar um novo tipo de produto.</p>
-        <form method="post" enctype="multipart/form-data" action="{% url 'new_produto' img %}">
+        <form method="post" enctype="multipart/form-data" action="{% url 'new_produto' %}">
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit">Cadastrar</button>

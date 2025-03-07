@@ -72,7 +72,7 @@ def edit_produto(request, produto_id):
         form = ProdutoForm(instance=produto)
     else:
         # Dados submetidos; processa os dados.
-        form = ProdutoForm(instance=produto, data=request.POST)
+        form = ProdutoForm(instance=produto, data=request.POST, files=request.FILES)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('produto'))

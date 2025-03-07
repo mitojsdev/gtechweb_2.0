@@ -9,6 +9,14 @@ class TipoProdutoForm(forms.ModelForm):
         widgets = {'descricao': forms.TextInput(attrs={'class': 'form-control'}),
                    'margem': forms.NumberInput(attrs={'class': 'form-control'})}
         
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        instance.descricao = instance.descricao.upper()  # Convertendo para uppercase
+
+        if commit:
+            instance.save()
+        return instance
+        
 class ProdutoForm(forms.ModelForm):
     class Meta:
         model = TbProduto
@@ -23,3 +31,16 @@ class ProdutoForm(forms.ModelForm):
                    'id_fornecedor': forms.Select(attrs={'class': 'form-control'}),
                    'estoque': forms.NumberInput(attrs={'class': 'form-control'}),
                    'imagem': forms.ClearableFileInput(attrs={'class': 'form-control'})}
+        
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+
+        # Convertendo os campos de texto para uppercase
+        instance.nome = instance.nome.upper()
+        instance.fabricante = instance.fabricante.upper()
+        instance.marca = instance.marca.upper()
+        instance.cor = instance.cor.upper()
+
+        if commit:
+            instance.save()
+        return instance
