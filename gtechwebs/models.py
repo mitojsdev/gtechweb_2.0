@@ -11,6 +11,9 @@ class TbCliente(models.Model):
         db_table = 'tb_cliente'
         unique_together = (('nome', 'telefone'),)
 
+    def __str__(self):
+        return self.nome
+
 
 class TbFornecedor(models.Model):
     id_fornecedor = models.AutoField(db_column='id_fornecedor', primary_key=True)  # Field name made lowercase.
@@ -53,6 +56,10 @@ class TbProduto(models.Model):
     class Meta:        
         db_table = 'tb_produto'
         unique_together = (('nome', 'id_fornecedor'),)
+
+    def __str__(self):
+        return self.nome
+      
 
 
 

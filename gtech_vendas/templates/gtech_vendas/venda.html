@@ -1,0 +1,41 @@
+{% extends 'gtechwebs/base.html' %}
+
+{% block title %} Vendas - Gtech Web Control{% endblock %}
+
+{% block content %}
+    <main>
+        <h1>Vendas</h1>        
+        <p>Veja a lista de vendas realizadas</p>
+        <a href="">Adicionar Venda</a>
+        {% if vendas %}
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Cliente</th>                        
+                        <th>Produto</th>
+                        <th>Quantidade</th>
+                        <th>Preço de Venda</th>
+                        <th>Lucro</th>                        
+                        <th>Ação</th>                       
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for venda in vendas %}
+                        <tr>
+                            <td>{{ venda.data|date:'d/m/Y' }}</td>                                                      
+                            <td>{{ venda.id_cliente.nome }}</td>                            
+                            <td>{{ venda.id_produto.nome }}</td>
+                            <td>{{ venda.quantidade }}</td>
+                            <td>{{ venda.preco_venda }}</td>
+                            <td>{{ venda.lucro }}</td>
+                            <td><a href="">Editar</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Nenhum venda cadastrada.</p>
+        {% endif %}
+    </main>
+{% endblock %}

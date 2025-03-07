@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('gtechwebs.urls')),
     path('', include('gtech_produtos.urls')),
+    path('', include('gtech_vendas.urls')),
 ]
 
 if settings.DEBUG:

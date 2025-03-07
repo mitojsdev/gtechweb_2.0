@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'gtechwebs',
-    'gtech_produtos',   # Adicionando a aplicação criada
+    'gtech_produtos',
+    'gtech_vendas',   # Adicionando a aplicação criada
 ]
 
 MIDDLEWARE = [
