@@ -1,0 +1,67 @@
+{% extends 'gtechwebs/base.html' %}
+
+
+{% block title %}Cadastrar Venda - Gtech Web Control{% endblock %}
+
+{% block content %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <main>
+        <h1>Cadastrar Venda</h1>
+        <p>Preencha o formulário abaixo para cadastrar uma nova venda.</p>
+        <form method="post" action="{% url 'new_venda'%}">
+            {% csrf_token %}
+            {{ form.as_p }}            
+            <p id="sit_margem"></p>
+            <button type="submit">Cadastrar</button>
+        </form>
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const precoVendaInput = document.getElementById("id_preco_venda");
+            const quantidadeInput = document.getElementById("id_quantidade");
+            const lucroInput = document.getElementById("id_lucro");
+            const produtoSelect = document.getElementById("id_produto");            
+    
+            produtoSelect.addEventListener("change", async function() {
+                const produtoId = this.value;
+    
+                if (produtoId) {
+                    // Faz uma requisição AJAX para obter o preço de custo do produto
+                    const response = await fetch(`/get_preco_custo/${produtoId}`);
+                    const data = await response.json();
+                    window.precoCusto = data.preco_custo;// Salva o preço de custo globalmente
+                    window.margem = data.margem;// Salva a margem globalmente 
+                    calcularLucro();
+                }
+            });
+    
+            function calcularLucro() {
+                const precoVenda = parseFloat(precoVendaInput.value) || 0;
+                const quantidade = parseInt(quantidadeInput.value) || 0;
+                const precoCusto = parseFloat(window.precoCusto) || 0;
+                const margem = parseFloat(window.margem) || 0;
+                const lucro = (precoVenda - precoCusto) * quantidade;
+
+                lucroInput.value = lucro.toFixed(2);  // Atualiza o campo lucro
+
+                document.getElementById("sit_margem").innerHTML = ""; // Limpa a mensagem de situação da margem
+
+                if (lucro < margem) {
+                    document.getElementById("sit_margem").innerHTML = "Margem de lucro abaixo do esperado!";
+                } else if (lucro === margem) {
+                    document.getElementById("sit_margem").innerHTML = "Dentro da margem de lucro esperada!";
+                } else {
+                    document.getElementById("sit_margem").innerHTML = "Margem de lucro acima do esperado!";
+                }
+                
+            }
+
+            
+    
+            precoVendaInput.addEventListener("input", calcularLucro);
+            quantidadeInput.addEventListener("input", calcularLucro);
+        });
+    </script>
+
+{% endblock %}

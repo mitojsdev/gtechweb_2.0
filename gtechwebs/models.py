@@ -58,7 +58,7 @@ class TbProduto(models.Model):
         unique_together = (('nome', 'id_fornecedor'),)
 
     def __str__(self):
-        return self.nome
+        return self.nome + ' / ' +  self.marca + ' / ' + self.id_fornecedor.nome_empresa
       
 
 

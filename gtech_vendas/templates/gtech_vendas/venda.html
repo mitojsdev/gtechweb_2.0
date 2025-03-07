@@ -6,7 +6,7 @@
     <main>
         <h1>Vendas</h1>        
         <p>Veja a lista de vendas realizadas</p>
-        <a href="">Adicionar Venda</a>
+        <a href="{% url 'new_venda' %}">Adicionar Venda</a>
         {% if vendas %}
             <table border="1">
                 <thead>
