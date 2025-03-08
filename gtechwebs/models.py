@@ -5,7 +5,8 @@ class TbCliente(models.Model):
     id_cliente = models.AutoField(db_column='id_cliente', primary_key=True)  # Field name made lowercase.
     nome = models.TextField(db_column='nome')  # Field name made lowercase.
     telefone = models.TextField(db_column='telefone')  # Field name made lowercase.
-    data_cadastro = models.DateField(db_column='data_cadastro', auto_now_add=True)  # Field name made lowercase.
+    data_cadastro = models.DateField(db_column='data_cadastro', auto_now_add=True)# Field name made lowercase.
+    email = models.TextField(db_column='email', blank=True, null=True)  # Field name made lowercase.  
 
     class Meta:        
         db_table = 'tb_cliente'

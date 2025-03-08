@@ -13,7 +13,8 @@
                     <tr>
                         <th>Nome</th>
                         <th>Telefone</th>
-                        <th>Data de Cadastro</th>
+                        <th>Email</th>
+                        <th>Data Cadastro</th>
                         <th>Ação</th>
                     </tr>
                 </thead>
@@ -22,6 +23,7 @@
                         <tr data-id="{{ cliente.id_cliente }}">
                             <td>{{ cliente.nome }}</td>
                             <td>{{ cliente.telefone }}</td>
+                            <td>{{ cliente.email }}</td>
                             <td>{{ cliente.data_cadastro|date:"d/m/Y" }}</td>
                             <td><a href="{% url 'edit_cliente' cliente.id_cliente %}">Editar</a></td>
                         </tr>

@@ -4,11 +4,12 @@ from .models import TbCliente, TbFornecedor
 class ClienteForm(forms.ModelForm):
     class Meta:
         model = TbCliente
-        fields = ['nome', 'telefone']
-        labels = {'nome': 'Nome', 'telefone': 'Telefone'}
+        fields = ['nome', 'telefone', 'email']
+        labels = {'nome': 'Nome', 'telefone': 'Telefone', 'email': 'E-mail'}
         widgets = {
             'nome': forms.TextInput(attrs={'size': '30'}),  # Define o tamanho do input
             'telefone': forms.TextInput(attrs={'size': '15'}),
+            'email': forms.EmailInput(attrs={'size': '30'}),
         }
 
 class FornecedorForm(forms.ModelForm):
