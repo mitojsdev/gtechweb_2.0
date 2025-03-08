@@ -1,8 +1,10 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from . forms import ClienteForm, FornecedorForm
 from . models import TbCliente, TbFornecedor
+from django.db.models import Q
+
 
 
 # Create your views here.
@@ -17,6 +19,24 @@ def clientes(request):
         'clientes': cli
     }
     return render(request, 'gtechwebs/clientes.html', context)
+
+def search_clientes(request):
+    """Busca clientes pelo nome, telefone ou e-mail."""
+    query = request.GET.get("q", "").strip()
+    
+    if query:
+        clientes = TbCliente.objects.filter(
+    Q(nome__icontains=query) | Q(telefone__icontains=query) | Q(email__icontains=query)
+    ).values("id_cliente", "nome", "telefone", "email", "data_cadastro")
+        
+        clientes_list = list(clientes)
+        for cliente in clientes_list:
+            cliente["data_cadastro"] = cliente["data_cadastro"].strftime("%d/%m/%Y")  # Formata a data
+    else:
+        clientes_list = []
+
+    return JsonResponse({"clientes": clientes_list})
+
 
 def new_cliente(request):
     """Página de cadastro de clientes."""
