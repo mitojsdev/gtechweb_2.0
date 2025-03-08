@@ -1,18 +1,17 @@
 {% extends 'gtechwebs/base.html' %}
 
 
-{% block title %}Cadastrar Venda - Gtech Web Control{% endblock %}
+{% block title %}Editar Venda - Gtech Web Control{% endblock %}
 
 {% block content %}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <main>
-        <h1>Cadastrar Venda</h1>
-        <p>Preencha o formulário abaixo para cadastrar uma nova venda.</p>
-        <form method="post" action="{% url 'new_venda'%}">
+        <h1>Editar Venda</h1>        
+        <form method="post" action="{% url 'edit_venda' venda.id %}">
             {% csrf_token %}
             {{ form.as_p }}            
             <p id="sit_margem"></p>
-            <button type="submit">Cadastrar</button>
+            <button type="submit">Salvar</button>
         </form>
     </main>
 

@@ -22,14 +22,14 @@
                 </thead>
                 <tbody>
                     {% for venda in vendas %}
-                        <tr>
+                        <tr data-id="{{venda.id}}">
                             <td>{{ venda.data|date:'d/m/Y' }}</td>                                                      
                             <td>{{ venda.id_cliente.nome }}</td>                            
                             <td>{{ venda.id_produto.nome }}</td>
                             <td>{{ venda.quantidade }}</td>
                             <td>{{ venda.preco_venda }}</td>
                             <td>{{ venda.lucro }}</td>
-                            <td><a href="">Editar</a></td>
+                            <td><a href="{% url 'edit_venda' venda.id %}">Editar</a></td>
                         </tr>
                     {% endfor %}
                 </tbody>

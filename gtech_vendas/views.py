@@ -34,6 +34,21 @@ def new_venda(request):
     context = {'form': form}
     return render(request, 'gtech_vendas/new_venda.html', context)
 
+def edit_venda(request, venda_id):
+    """Edita uma venda."""
+    venda = get_object_or_404(TbVenda, id=venda_id)
+    if request.method != 'POST':
+        # Requisição inicial; preenche o formulário com a instância atual.
+        form = VendaForm(instance=venda)
+    else:
+        # Dados de POST submetidos; processa os dados.
+        form = VendaForm(instance=venda, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('venda'))
+    context = {'venda': venda, 'form': form}
+    return render(request, 'gtech_vendas/edit_venda.html', context)
+
 def get_preco_custo(request, produto_id):
     """Retorna o preço de custo de um produto."""
     try:
