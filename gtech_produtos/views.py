@@ -1,8 +1,10 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect, Http404, JsonResponse
 from django.urls import reverse
 from gtechwebs.models import TbTipoProduto, TbProduto
 from .forms import TipoProdutoForm, ProdutoForm
+from django.db.models import Q
+from django.conf import settings
 # Create your views here.
 
 def tipo_produto(request):
@@ -49,6 +51,25 @@ def produto(request):
         'produtos': produtos
     }
     return render(request, 'gtech_produtos/produto.html', context)
+
+def search_produto(request):
+    """Busca produtos pelo nome, fabricante, marca ou cor."""
+    query = request.GET.get("q", "").strip()
+    
+    if query:
+        produtos = TbProduto.objects.filter(
+    Q(nome__icontains=query) | Q(fabricante__icontains=query) | Q(marca__icontains=query) | Q(cor__icontains=query)
+    ).values("id_produto", "nome", "preco_custo", "tipo_produto__descricao", "fabricante", "marca", "cor", "id_fornecedor__nome_empresa", "data_cadastro", "estoque", "imagem")
+        
+        produtos_list = list(produtos)
+        for produto in produtos_list:
+            produto["data_cadastro"] = produto["data_cadastro"].strftime("%d/%m/%Y")  # Formata a data
+            if produto["imagem"]:
+                produto["imagem"] = settings.MEDIA_URL + str(produto["imagem"])
+    else:
+        produtos_list = []
+
+    return JsonResponse({"produtos": produtos_list})
 
 def new_produto(request):
     """Adiciona um novo produto."""
