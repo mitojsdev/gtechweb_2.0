@@ -71,6 +71,23 @@ def fornecedores(request):
     }
     return render(request, 'gtechwebs/fornecedores.html', context)
 
+def search_fornecedores(request):
+    """Busca fornecedores pelo nome, telefone ou e-mail."""
+    query = request.GET.get("q", "").strip()
+    
+    if query:
+        fornecedores = TbFornecedor.objects.filter(
+    Q(nome_empresa__icontains=query) | Q(tipo_empresa__icontains=query)
+    ).values("id_fornecedor", "nome_empresa", "tipo_empresa", "data_cadastro")
+        
+        fornecedores_list = list(fornecedores)
+        for fornecedor in fornecedores_list:
+            fornecedor["data_cadastro"] = fornecedor["data_cadastro"].strftime("%d/%m/%Y")  # Formata a data
+    else:
+        fornecedores_list = []
+
+    return JsonResponse({"fornecedores": fornecedores_list})
+
 def new_fornecedor(request):
     """Página de cadastro de fornecedores."""
     if request.method != 'POST':

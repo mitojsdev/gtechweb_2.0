@@ -4,11 +4,15 @@
 
 {% block content %}
     <main>
-        <h1>Fornecedores</h1>
-        <p>Veja a lista de fornecedores cadastrados no sistema.</p>
+        <h1>Fornecedores</h1>        
         <a href="{% url 'new_fornecedor' %}">Adicionar fornecedor</a>
-        {% if fornecedores %}
-            <table border="1">
+        <br>
+        <br>
+        <!-- Campo de busca -->
+        <input type="text" id="search" placeholder="Pesquisar fornecedor..." class="form-control">
+        <br><br>
+        <!-- Tabela de fornecedores -->        
+            <table id="tabela" border="1" hidden="true">
                 <thead>
                     <tr>
                         <th>Nome Empresa</th>
@@ -17,19 +21,45 @@
                         <th>Ação</th>
                     </tr>
                 </thead>
-                <tbody>
-                    {% for fornecedor in fornecedores %}
-                        <tr data-id="{{ fornecedor.id_fornecedor }}">
-                            <td>{{ fornecedor.nome_empresa }}</td>
-                            <td>{{ fornecedor.tipo_empresa }}</td>
-                            <td>{{ fornecedor.data_cadastro|date:"d/m/Y" }}</td>
-                            <td><a href="{% url 'edit_fornecedor' fornecedor.id_fornecedor%}">Editar</a></td>
-                        </tr>
-                    {% endfor %}
+                <tbody id="fornecedores-table">                    
                 </tbody>
             </table>
-        {% else %}
-            <p>Nenhum fornecedor cadastrado.</p>
-        {% endif %}
+        <p id="no-results" style="display: none;">Nenhum fornecedor encontrado.</p>        
     </main>
+    <!-- Script para busca AJAX -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#search").on("keyup", function () {
+                var query = $(this).val(); // Obtém o valor digitado
+                $.ajax({
+                    url: "{% url 'search_fornecedores' %}", // URL da view Django
+                    data: { 'q': query },
+                    dataType: "json",
+                    success: function (data) {
+                        $("#tabela").show(); // Exibe a tabela
+                        var tbody = $("#fornecedores-table");
+                        tbody.empty(); // Limpa a tabela
+                        
+                        if (data.fornecedores.length === 0) {
+                            $("#no-results").show();
+                            $("#tabela").hide();
+                        } else {
+                            $("#no-results").hide();
+                            $.each(data.fornecedores, function (index, fornecedor) {
+                                tbody.append(`
+                                    <tr data-id="${fornecedor.id_fornecedor}">
+                                        <td>${fornecedor.nome_empresa}</td>
+                                        <td>${fornecedor.tipo_empresa}</td>
+                                        <td>${fornecedor.data_cadastro}</td>
+                                        <td><a href="/edit_fornecedor/${fornecedor.id_fornecedor}/">Editar</a></td>                                                                                
+                                    </tr>
+                                `);
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}

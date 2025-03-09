@@ -38,7 +38,7 @@
         $("#search").on("keyup", function () {
             var query = $(this).val(); // Obtém o valor digitado
             $.ajax({
-                url: "{% url 'search' %}", // URL da view Django
+                url: "{% url 'search_clientes' %}", // URL da view Django
                 data: { 'q': query },
                 dataType: "json",
                 success: function (data) {
