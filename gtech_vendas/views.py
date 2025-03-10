@@ -3,15 +3,45 @@ from django.http import HttpResponseRedirect, Http404, JsonResponse
 from django.urls import reverse
 from gtechwebs.models import TbVenda, TbProduto
 from .forms import VendaForm
+from django.db.models import Q
+from datetime import datetime
+
 
 # Create your views here.
+#def venda(request):
+ #   """View para a página de vendas realizadas."""
+ #   vendas = TbVenda.objects.all()
+  #  context = {
+  #      'vendas': vendas
+  #  }
+  #  return render(request, 'gtech_vendas/venda.html', context)
+
+
 def venda(request):
-    """View para a página de vendas realizadas."""
+    query = request.GET.get("q", "").strip()
+    data_inicio = request.GET.get("data_inicio", "")
+    data_fim = request.GET.get("data_fim", "")
+    
     vendas = TbVenda.objects.all()
-    context = {
-        'vendas': vendas
-    }
+
+    # Filtro por nome do cliente ou nome do produto
+    if query:
+        vendas = vendas.filter(
+            Q(id_cliente__nome__icontains=query) |  
+            Q(id_produto__nome__icontains=query) |
+            Q(id_produto__id_fornecedor__nome_empresa__icontains=query)
+        )
+
+    # Filtro por intervalo de datas
+    if data_inicio:
+        vendas = vendas.filter(data__gte=datetime.strptime(data_inicio, "%Y-%m-%d"))
+    if data_fim:
+        vendas = vendas.filter(data__lte=datetime.strptime(data_fim, "%Y-%m-%d"))
+
+    context = {"vendas": vendas}
+
     return render(request, 'gtech_vendas/venda.html', context)
+
 
 def new_venda(request):
     """Adiciona uma nova venda."""

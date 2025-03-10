@@ -1,41 +1,58 @@
 {% extends 'gtechwebs/base.html' %}
 
-{% block title %} Vendas - Gtech Web Control{% endblock %}
+{% block title %} Vendas - Gtech Web Control {% endblock %}
 
 {% block content %}
-    <main>
-        <h1>Vendas</h1>        
-        <p>Veja a lista de vendas realizadas</p>
-        <a href="{% url 'new_venda' %}">Adicionar Venda</a>
+<main>
+    <h1>Vendas</h1>
+
+    <a href="{% url 'new_venda' %}">Adicionar Venda</a>
+
+    <br>
+    <br>
+
+    <form id="search-form" method="get" action="{% url 'venda' %}">
+        <input type="text" id="search" name="q" placeholder="Pesquisar por cliente, produto ou fornecedor" value="{{ request.GET.q }}">
+        <input type="date" id="data_inicio" name="data_inicio" value="{{ request.GET.data_inicio }}">
+        <input type="date" id="data_fim" name="data_fim" value="{{ request.GET.data_fim }}">
+        <button type="submit">Filtrar</button>
+    </form>
+    <br>
+    <br>
+
+    {% if request.GET.q or request.GET.data_inicio or request.GET.data_fim %}
         {% if vendas %}
             <table border="1">
                 <thead>
                     <tr>
                         <th>Data</th>
-                        <th>Cliente</th>                        
+                        <th>Cliente</th>
                         <th>Produto</th>
+                        <th>Fornecedor</th>
                         <th>Quantidade</th>
                         <th>Preço de Venda</th>
-                        <th>Lucro</th>                        
-                        <th>Ação</th>                       
+                        <th>Lucro</th>
+                        <th>Ação</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for venda in vendas %}
-                        <tr data-id="{{venda.id}}">
-                            <td>{{ venda.data|date:'d/m/Y' }}</td>                                                      
-                            <td>{{ venda.id_cliente.nome }}</td>                            
-                            <td>{{ venda.id_produto.nome }}</td>
-                            <td>{{ venda.quantidade }}</td>
-                            <td>{{ venda.preco_venda }}</td>
-                            <td>{{ venda.lucro }}</td>
-                            <td><a href="{% url 'edit_venda' venda.id %}">Editar</a></td>
-                        </tr>
+                    <tr>
+                        <td>{{ venda.data|date:'d/m/Y' }}</td>
+                        <td>{{ venda.id_cliente.nome }}</td>
+                        <td>{{ venda.id_produto.nome }}</td>
+                        <td>{{ venda.id_produto.id_fornecedor.nome_empresa }}</td>
+                        <td>{{ venda.quantidade }}</td>
+                        <td>{{ venda.preco_venda }}</td>
+                        <td>{{ venda.lucro }}</td>
+                        <td><a href="{% url 'edit_venda' venda.id %}">Editar</a></td>
+                    </tr>
                     {% endfor %}
                 </tbody>
             </table>
         {% else %}
-            <p>Nenhum venda cadastrada.</p>
+            <p>Nenhuma venda encontrada.</p>
         {% endif %}
-    </main>
+    {% endif %}
+</main>
 {% endblock %}

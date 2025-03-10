@@ -68,7 +68,7 @@ class TbVenda(models.Model):
     id = models.AutoField(db_column='id', primary_key=True)  # Field name made lowercase.
     data = models.DateField(db_column='data')  # Field name made lowercase.
     id_cliente = models.ForeignKey(TbCliente, models.DO_NOTHING, db_column='id_cliente', blank=True, null=True)  # Field name made lowercase.
-    id_produto = models.ForeignKey(TbProduto, models.DO_NOTHING, db_column='Id_produto', blank=True, null=True)  # Field name made lowercase.
+    id_produto = models.ForeignKey(TbProduto, models.DO_NOTHING, db_column='id_produto', blank=True, null=True)  # Field name made lowercase.
     quantidade = models.IntegerField(db_column='quantidade', blank=True, null=True)  # Field name made lowercase.
     preco_venda = models.FloatField(db_column='preco_venda')  # Field name made lowercase.
     lucro = models.FloatField(db_column='lucro', blank=True, null=True)  # Field name made lowercase.
