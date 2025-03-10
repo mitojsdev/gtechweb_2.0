@@ -5,6 +5,9 @@ from gtechwebs.models import TbVenda, TbProduto
 from .forms import VendaForm
 from django.db.models import Q
 from datetime import datetime
+import pandas as pd
+from django.db import models
+import plotly.express as px
 
 
 # Create your views here.
@@ -87,4 +90,19 @@ def get_preco_custo(request, produto_id):
     except TbProduto.DoesNotExist:
         data = {'preco_custo': None}
     return JsonResponse(data) 
+
+def dashboard(request):
+    # Buscar dados das vendas
+    vendas = TbVenda.objects.all().values('id_produto__nome').annotate(total_vendas=models.Count('id_produto'))
+
+    # Transformar em DataFrame
+    df = pd.DataFrame(list(vendas))
+
+    # Criar gráfico de barras
+    fig = px.bar(df, x='id_produto__nome', y='total_vendas', title="Vendas por Produto")
+    graph = fig.to_html(full_html=False)
+
+    context = {'graph': graph}   
+
+    return render(request, 'gtech_vendas/inicio.html', context)
     

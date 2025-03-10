@@ -12,6 +12,10 @@ def index(request):
     """Página incial do site."""
     return render(request, 'gtechwebs/index.html')
 
+def inicio(request):
+    """Página incial do site."""
+    return render(request, 'gtechwebs/inicio.html')
+
 def clientes(request):
     """Página de clientes."""
     cli = TbCliente.objects.all()
@@ -112,3 +116,4 @@ def edit_fornecedor(request, id_fornecedor):
             return HttpResponseRedirect(reverse('fornecedores'))
     context = {'fornecedor': fornecedor, 'form': form}
     return render(request, 'gtechwebs/edit_fornecedor.html', context)
+

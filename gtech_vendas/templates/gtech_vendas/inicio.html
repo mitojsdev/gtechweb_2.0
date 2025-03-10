@@ -1,0 +1,10 @@
+{% extends 'gtechwebs/base.html' %}
+
+{% block title %}Fornecedores - Gtech Web Control{% endblock %}
+
+{% block content %}
+<script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
+    <h1>Dashboard de Vendas</h1>
+    <div>{{ graph|safe }}</div>
+  
+{% endblock %}
