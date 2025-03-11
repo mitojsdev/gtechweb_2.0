@@ -7,7 +7,10 @@ from django.db.models import Q
 from datetime import datetime
 import pandas as pd
 from django.db import models
+from django.utils import timezone
 import plotly.express as px
+import plotly.io as pio
+
 
 
 # Create your views here.
@@ -92,17 +95,29 @@ def get_preco_custo(request, produto_id):
     return JsonResponse(data) 
 
 def dashboard(request):
-    # Buscar dados das vendas
-    vendas = TbVenda.objects.all().values('id_produto__nome').annotate(total_vendas=models.Count('id_produto'))
+    # Define o intervalo dos últimos 10 dias
+    data_limite = timezone.now().date() - timezone.timedelta(days=10)
 
-    # Transformar em DataFrame
-    df = pd.DataFrame(list(vendas))
+    # Filtra as vendas dos últimos 10 dias
+    #vendas = TbVenda.objects.filter(data__gte=data_limite).values("data").order_by("data")
+    vendas = TbVenda.objects.filter(data__gte=data_limite).values("id_produto__nome", "quantidade")
 
-    # Criar gráfico de barras
-    fig = px.bar(df, x='id_produto__nome', y='total_vendas', title="Vendas por Produto")
-    graph = fig.to_html(full_html=False)
+    if vendas:
+        # Cria um DataFrame para manipular os dados
+        df = pd.DataFrame(vendas)
+        
 
-    context = {'graph': graph}   
+        # Gera o gráfico com Plotly
+        fig = px.bar(df, 
+                     x="id_produto__nome", 
+                     y="quantidade", 
+                     title="Vendas por Produto nos Últimos 10 Dias")
+                     #labels={"id_produto__nome": "Produto", "quantidade": "Quantidade Vendida"},
+                     #text_auto=True)
 
-    return render(request, 'gtech_vendas/inicio.html', context)
-    
+        # Converte o gráfico para HTML
+        graph = pio.to_html(fig, full_html=False)
+    else:
+        graph = "<p>Nenhuma venda encontrada nos últimos 10 dias.</p>"
+
+    return render(request, 'gtech_vendas/inicio.html', {"graph": graph})
