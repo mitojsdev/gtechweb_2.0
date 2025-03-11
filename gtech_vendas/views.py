@@ -5,11 +5,6 @@ from gtechwebs.models import TbVenda, TbProduto
 from .forms import VendaForm
 from django.db.models import Q
 from datetime import datetime
-import pandas as pd
-from django.db import models
-from django.utils import timezone
-import plotly.express as px
-import plotly.io as pio
 
 
 
@@ -93,31 +88,3 @@ def get_preco_custo(request, produto_id):
     except TbProduto.DoesNotExist:
         data = {'preco_custo': None}
     return JsonResponse(data) 
-
-def dashboard(request):
-    # Define o intervalo dos últimos 10 dias
-    data_limite = timezone.now().date() - timezone.timedelta(days=10)
-
-    # Filtra as vendas dos últimos 10 dias
-    #vendas = TbVenda.objects.filter(data__gte=data_limite).values("data").order_by("data")
-    vendas = TbVenda.objects.filter(data__gte=data_limite).values("id_produto__nome", "quantidade")
-
-    if vendas:
-        # Cria um DataFrame para manipular os dados
-        df = pd.DataFrame(vendas)
-        
-
-        # Gera o gráfico com Plotly
-        fig = px.bar(df, 
-                     x="id_produto__nome", 
-                     y="quantidade", 
-                     title="Vendas por Produto nos Últimos 10 Dias")
-                     #labels={"id_produto__nome": "Produto", "quantidade": "Quantidade Vendida"},
-                     #text_auto=True)
-
-        # Converte o gráfico para HTML
-        graph = pio.to_html(fig, full_html=False)
-    else:
-        graph = "<p>Nenhuma venda encontrada nos últimos 10 dias.</p>"
-
-    return render(request, 'gtech_vendas/inicio.html', {"graph": graph})

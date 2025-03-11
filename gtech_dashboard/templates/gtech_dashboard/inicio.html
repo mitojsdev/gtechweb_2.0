@@ -1,0 +1,19 @@
+{% extends 'gtechwebs/base.html' %}
+
+{% block title %}Dashboard - Gtech Web Control{% endblock %}
+
+{% block content %}
+<h1>Dashboard</h1>
+
+<p><strong>Clientes cadastrados: </strong>{{total_clientes}}</p>
+<p><strong>Fornecedores cadastrados: </strong>{{total_fornecedores}}</p>
+<p><strong>Produtos cadastrados: </strong>{{total_produtos}}</p>
+<p><strong>Total Vendas 10 dias: </strong>{{total_vendas}}</p>
+<p><strong>Total lucro 10 dias: </strong>{{total_lucro}}</p>
+
+<h2>Vendas dos últimos 10 dias</h2>
+<div>
+    {{grafico|safe}}
+</div>
+
+{% endblock %}
