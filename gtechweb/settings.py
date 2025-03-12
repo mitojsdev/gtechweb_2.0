@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'gtechwebs',
     'gtech_produtos',
     'gtech_vendas',
-    'gtech_dashboard'   # Adicionando a aplicação criada
+    'gtech_dashboard',
+    'users',   # Adicionando a aplicação criada
 ]
 
 MIDDLEWARE = [
@@ -135,3 +136,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Configuração para arquivos de mídia
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+LOGIN_REDIRECT_URL = '/inicio'
+LOGOUT_REDIRECT_URL = '/users/login'

@@ -25,6 +25,7 @@ urlpatterns = [
     path('', include('gtech_produtos.urls')),
     path('', include('gtech_vendas.urls')),
     path('', include('gtech_dashboard.urls')),
+    path('', include('users.urls'))
 ]
 
 if settings.DEBUG:
