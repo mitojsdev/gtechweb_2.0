@@ -6,14 +6,12 @@ from . models import TbCliente, TbFornecedor
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required, user_passes_test
 
-
-
 # Create your views here.
 def index(request):
     """Página incial do site."""
     return render(request, 'gtechwebs/index.html')
 
-
+@login_required
 def clientes(request):
     """Página de clientes."""
     cli = TbCliente.objects.all()
@@ -22,7 +20,7 @@ def clientes(request):
     }
     return render(request, 'gtechwebs/clientes.html', context)
 
-@login_required
+
 def search_clientes(request):
     """Busca clientes pelo nome, telefone ou e-mail."""
     query = request.GET.get("q", "").strip()
