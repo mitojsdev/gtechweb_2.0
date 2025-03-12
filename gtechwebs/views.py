@@ -4,6 +4,7 @@ from django.urls import reverse
 from . forms import ClienteForm, FornecedorForm
 from . models import TbCliente, TbFornecedor
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required, user_passes_test
 
 
 
@@ -12,9 +13,6 @@ def index(request):
     """Página incial do site."""
     return render(request, 'gtechwebs/index.html')
 
-def inicio(request):
-    """Página incial do site."""
-    return render(request, 'gtechwebs/inicio.html')
 
 def clientes(request):
     """Página de clientes."""
@@ -24,6 +22,7 @@ def clientes(request):
     }
     return render(request, 'gtechwebs/clientes.html', context)
 
+@login_required
 def search_clientes(request):
     """Busca clientes pelo nome, telefone ou e-mail."""
     query = request.GET.get("q", "").strip()
