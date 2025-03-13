@@ -7,6 +7,12 @@ from django.db.models import Q
 from django.contrib.auth.decorators import login_required, user_passes_test
 
 # Create your views here.
+
+def verifica_permissao(app_name, perm_name):
+    """Função que retorna uma verificação dinâmica de permissão."""    
+    return lambda user: user.has_perm(f'{app_name}.{perm_name}')
+    
+
 def index(request):
     """Página incial do site."""
     return render(request, 'gtechwebs/index.html')
@@ -38,7 +44,8 @@ def search_clientes(request):
 
     return JsonResponse({"clientes": clientes_list})
 
-
+@login_required
+@user_passes_test(verifica_permissao('gtechwebs','add_tbcliente'),login_url='acesso_negado')
 def new_cliente(request):
     """Página de cadastro de clientes."""
     if request.method != 'POST':
@@ -51,6 +58,8 @@ def new_cliente(request):
     context = {'form': form}
     return render(request, 'gtechwebs/new_cliente.html', context)
 
+@login_required
+@user_passes_test(verifica_permissao('gtechwebs','change_tbcliente'),login_url='acesso_negado')
 def edit_cliente(request, id_cliente):
     """Página de edição de clientes."""
     cli = TbCliente.objects.get(id_cliente=id_cliente)
@@ -64,6 +73,7 @@ def edit_cliente(request, id_cliente):
     context = {'cliente': cli, 'form': form}
     return render(request, 'gtechwebs/edit_cliente.html', context)
 
+@login_required
 def fornecedores(request):
     """Página de fornecedores."""
     fornecedores = TbFornecedor.objects.all()
@@ -89,6 +99,8 @@ def search_fornecedores(request):
 
     return JsonResponse({"fornecedores": fornecedores_list})
 
+@login_required
+@user_passes_test(verifica_permissao('gtechwebs','add_tbfornecedor'),login_url='acesso_negado')
 def new_fornecedor(request):
     """Página de cadastro de fornecedores."""
     if request.method != 'POST':
@@ -101,6 +113,8 @@ def new_fornecedor(request):
     context = {'form': form}
     return render(request, 'gtechwebs/new_fornecedor.html', context)
 
+@login_required
+@user_passes_test(verifica_permissao('gtechwebs','change_tbfornecedor'),login_url='acesso_negado')
 def edit_fornecedor(request, id_fornecedor):
     """Página de edição de fornecedores."""
     fornecedor = TbFornecedor.objects.get(id_fornecedor=id_fornecedor)
@@ -114,3 +128,5 @@ def edit_fornecedor(request, id_fornecedor):
     context = {'fornecedor': fornecedor, 'form': form}
     return render(request, 'gtechwebs/edit_fornecedor.html', context)
 
+def acesso_negado(request):
+    return render(request,'gtechwebs/acesso_negado.html',{})

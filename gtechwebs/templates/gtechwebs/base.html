@@ -84,6 +84,7 @@
             text-decoration: none;
             color: black;
         }
+        
 
         /* Conteúdo principal */
         .content {
@@ -101,6 +102,22 @@
             width: calc(100% - 250px);
             text-align: center;
         }
+        .logout-link {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: black;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .logout-link:hover {
+            text-decoration: underline;
+            color: red;
+        }
+
 
     </style>
 </head>
@@ -109,6 +126,13 @@
     <!-- Cabeçalho -->
     <header>
         <a href="{% url 'inicio' %}">Gtech Web Control</a>
+
+        {% if user.is_authenticated %}
+            <a href="{% url 'logout' %}" class="logout-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+            <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: none;">
+        {% csrf_token %}
+            </form>
+        {% endif %}     
     </header>
 
     <!-- Menu lateral -->
