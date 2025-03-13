@@ -46,7 +46,7 @@ def venda(request):
     return render(request, 'gtech_vendas/venda.html', context)
 
 @login_required
-@user_passes_test(verifica_permissao('gtech_vendas','add_tbvenda'),login_url='acesso_negado')
+@user_passes_test(verifica_permissao('gtechwebs','add_tbvenda'),login_url='acesso_negado')
 def new_venda(request):
     """Adiciona uma nova venda."""
     if request.method != 'POST':
@@ -69,7 +69,7 @@ def new_venda(request):
     return render(request, 'gtech_vendas/new_venda.html', context)
 
 @login_required
-@user_passes_test(verifica_permissao('gtech_vendas','change_tbvenda'),login_url='acesso_negado')
+@user_passes_test(verifica_permissao('gtechwebs','change_tbvenda'),login_url='acesso_negado')
 def edit_venda(request, venda_id):
     """Edita uma venda."""
     venda = get_object_or_404(TbVenda, id=venda_id)
