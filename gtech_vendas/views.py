@@ -2,9 +2,11 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, Http404, JsonResponse
 from django.urls import reverse
 from gtechwebs.models import TbVenda, TbProduto
+from gtechwebs.views import verifica_permissao
 from .forms import VendaForm
 from django.db.models import Q
 from datetime import datetime
+from django.contrib.auth.decorators import login_required, user_passes_test
 
 
 
@@ -43,7 +45,8 @@ def venda(request):
 
     return render(request, 'gtech_vendas/venda.html', context)
 
-
+@login_required
+@user_passes_test(verifica_permissao('gtech_vendas','add_tbvenda'),login_url='acesso_negado')
 def new_venda(request):
     """Adiciona uma nova venda."""
     if request.method != 'POST':
@@ -65,6 +68,8 @@ def new_venda(request):
     context = {'form': form}
     return render(request, 'gtech_vendas/new_venda.html', context)
 
+@login_required
+@user_passes_test(verifica_permissao('gtech_vendas','change_tbvenda'),login_url='acesso_negado')
 def edit_venda(request, venda_id):
     """Edita uma venda."""
     venda = get_object_or_404(TbVenda, id=venda_id)
