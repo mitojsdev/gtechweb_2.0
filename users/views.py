@@ -2,20 +2,36 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
 from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.models import User, Group
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, authenticate, login
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 import random, string
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required, user_passes_test
 from gtechwebs.views import verifica_permissao
+from .forms import LoginForm
 
-class CustomLoginView(LoginView):
-    template_name = 'users/login.html'
+#class CustomLoginView(LoginView):
+    #template_name = 'users/login.html'
 
 class CustomLogoutView(LogoutView):
     next_page = reverse_lazy('login')
 
+def login_view(request):
+    form = LoginForm(request.POST or None)
+
+    if request.method == 'POST' and form.is_valid():
+        username = form.cleaned_data['username']
+        password = form.cleaned_data['password']
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('inicio')
+        else:
+            messages.error(request, 'Usuário ou senha inválidos.')
+
+    return render(request, 'users/login.html', {'form': form})
 
 @login_required
 @user_passes_test(verifica_permissao('auth', 'view_user'),login_url='acesso_negado')

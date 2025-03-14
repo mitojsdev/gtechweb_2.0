@@ -1,9 +1,107 @@
-{% block title %}Gtech Web Control{% endblock %}
+{% load django_bootstrap5 %}
 
-{% block content %}
-    <main>
-        <h1>Bem-vindo ao Gtech Web Control</h1>
-        <p>Gerencie seus produtos, clientes, fornecedores e vendas com eficiência.</p>
-    </main>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gtech Imports - Produtos Diversos com menor preço</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+
+    <style>
+        .hero {
+            background: linear-gradient(rgb(0, 254, 52), rgba(0, 0, 0, 0.6)), url('https://source.unsplash.com/1600x900/?electronics,store') center/cover;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+        }
+        .contact-section {
+            background-color: #f8f9fa;
+            padding: 50px 20px;
+            text-align: center;
+        }
+        .cta-button {
+            display: inline-block;
+            padding: 12px 20px;
+            font-size: 18px;
+        }
+
+        .login {
+            position: absolute;
+            right: 20px;
+            top: 10px;           
+            transform: translateY(-50%);
+            color: rgb(19, 183, 238);
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        
+        <a class="login" href="{% url 'login' %}">Gerenciar</a>
+        <br>
+        <img src="/media/produtos/gtech_logo.png" alt="">
+        <p>"Oi, eu sou o GIl!"</p>
+    </header>
+
+    <!-- Carrossel de Produtos -->
+    <section id="produtos" class="container my-5">
+        <h2 class="text-center mb-4">Confira Nossos Produtos</h2>
+        <div id="carouselProdutos" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="/media/produtos/stanley.jpg" class="d-block w-100" alt="Garrafa">
+                </div>
+                <div class="carousel-item">
+                    <img src="/media/produtos/xiaomi.jpg" class="d-block w-100" alt="Celular">
+                </div>
+                <div class="carousel-item">
+                    <img src="/media/produtos/compressor.jpg" class="d-block w-100" alt="Utilidades">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselProdutos" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselProdutos" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            </button>
+        </div>
+    </section>
+
+    <!-- YouTube Section -->
+    <section class="text-center py-5 bg-dark text-light">
+        <h2>Quer mais dicas e novidades?</h2>
+        <p>Confira nosso canal no YouTube e fique por dentro das últimas tendências e lançamentos.</p>
+        <a href="https://www.youtube.com/seucanal" target="_blank" class="btn btn-danger cta-button">
+            <i class="bi bi-youtube"></i> Visite nosso canal
+        </a>
+    </section>
+
+    <!-- Contato via WhatsApp -->
+    <section class="contact-section">
+        <h2>Entre em Contato</h2>
+        <p>Quer saber mais sobre nossos produtos e serviços? Fale conosco pelo WhatsApp.</p>
+        <a href="https://wa.me/5599999999999" target="_blank" class="btn btn-success cta-button">
+            <i class="bi bi-whatsapp"></i> Fale Conosco
+        </a>
+    </section>
+
+    <!-- Rodapé -->
+    <footer class="text-center py-4 bg-dark text-light">
+        <p>&copy; 2025 Gtech Imports - Todos os direitos reservados.</p>
+    </footer>
+
+</body>
+</html>
+
 

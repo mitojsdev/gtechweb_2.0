@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'gtech_produtos',
     'gtech_vendas',
     'gtech_dashboard',
-    'users',   # Adicionando a aplicação criada
+    'users',
+    'django_bootstrap5',   # Adicionando a aplicação criada
 ]
 
 MIDDLEWARE = [
