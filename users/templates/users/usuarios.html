@@ -1,0 +1,42 @@
+{% extends 'gtechwebs/base.html' %}
+
+{% block title %}Usuário - Gtech Web Control{% endblock %}
+
+{% block content %}
+<main>
+    <h1>Usuários</h1>
+    <a href="{% url 'new_user' %}">Adicionar Usuário</a>
+    {% if usuarios %}
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Grupo</th>
+                <th>Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario in usuarios %}
+            <tr>
+                <td>{{ usuario.username }}</td>
+                <td>{{ usuario.email }}</td>
+                <td>
+                    {% if usuario.groups.all %}
+                    {% for grupo in usuario.groups.all %}
+                    {{ grupo.name }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                    {% else %}
+                    Nenhum grupo
+                    {% endif %}
+                </td>
+                <td><a href="{% url 'edit_user' usuario.id%}">Editar</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>Nenhum usuário cadastrado.</p>
+    {% endif %}
+</main>
+{% endblock %}

@@ -10,8 +10,10 @@ from django.utils import timezone
 from django.db.models import Count
 import plotly.express as px
 import plotly.io as pio
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@login_required
 def dashboard(request):
     #contagem geral do projeto
     total_clientes = TbCliente.objects.count()

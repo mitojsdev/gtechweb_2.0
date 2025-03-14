@@ -1,0 +1,27 @@
+{% extends "gtechwebs/base.html" %}
+
+{% block content %}
+<h2>Editar Usuário</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    <label for="username">Nome de Usuário:</label>
+    <input type="text" name="username" value="{{ usuario.username }}" required>
+
+    <label for="email">E-mail:</label>
+    <input type="email" name="email" value="{{ usuario.email }}" required>
+
+    <label for="group">Papel/Grupo:</label>
+    <select name="group">
+        {% for grupo in grupos %}
+            <option value="{{ grupo.name }}" {% if grupo in usuario.groups.all %}selected{% endif %}>
+                {{ grupo.name }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <button type="submit">Salvar</button>
+</form>
+
+<a href="{% url 'usuarios' %}">Voltar</a>
+{% endblock %}

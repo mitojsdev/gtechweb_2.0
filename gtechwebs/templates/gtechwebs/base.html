@@ -117,6 +117,14 @@
             text-decoration: underline;
             color: red;
         }
+        .username {
+            position: absolute;
+            left: 300px;
+            top: 0%;            
+            color: black;            
+            font-size: 18px;
+            font-weight: bold;
+        }
 
 
     </style>
@@ -128,6 +136,7 @@
         <a href="{% url 'inicio' %}">Gtech Web Control</a>
 
         {% if user.is_authenticated %}
+            <p class="username">Olá, {{user.username}}</p>
             <a href="{% url 'logout' %}" class="logout-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
             <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: none;">
         {% csrf_token %}
@@ -147,7 +156,12 @@
                 </ul>
             </li>
             <li><a href="{% url 'venda' %}">Venda</a></li>            
-            <li><a href="{% url 'new_user' %}">Usuários</a></li>
+            <li>
+                <a href="{% url 'usuarios' %}">Usuários</a>
+                <ul class="submenu">
+                    <li><a href="{% url 'grupos' %}">Grupos e Permissões</a></li>
+                </ul>
+            </li>
         </ul>
     </nav>
 

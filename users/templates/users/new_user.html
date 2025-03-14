@@ -14,7 +14,7 @@
     <select name="group">
         <option value="">Selecione um papel...</option>
         {% for group in groups %}
-            <option value="{{ group.id }}">{{ group.name }}</option>
+            <option value="{{ group.name }}">{{ group.name }}</option>
         {% endfor %}
     </select>
 

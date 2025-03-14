@@ -3,10 +3,12 @@ from django.urls import reverse_lazy
 from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.models import User, Group
 from django.contrib.auth import get_user_model
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 import random, string
 from django.core.mail import send_mail
+from django.contrib.auth.decorators import login_required, user_passes_test
+from gtechwebs.views import verifica_permissao
 
 class CustomLoginView(LoginView):
     template_name = 'users/login.html'
@@ -15,6 +17,18 @@ class CustomLogoutView(LogoutView):
     next_page = reverse_lazy('login')
 
 
+@login_required
+@user_passes_test(verifica_permissao('auth', 'view_user'),login_url='acesso_negado')
+def usuarios(request):
+    """Página de usuários."""
+    users = User.objects.all()
+    context = {
+        'usuarios': users
+    }
+    return render(request, 'users/usuarios.html', context)
+
+@login_required
+@user_passes_test(verifica_permissao('auth', 'add_user'),login_url='acesso_negado')
 def new_user(request):
     """Página de cadastro de usuarios."""
 
@@ -24,6 +38,7 @@ def new_user(request):
         username = request.POST['username']
         email = request.POST['email']
         group_name = request.POST.get('group', None)  # Nome do grupo (opcional)
+        print(f"Grupo selecionado pelo usuário: {group_name}")
 
         # Gerar senha temporária
         temp_password = ''.join(random.choices(string.ascii_letters + string.digits, k=8))
@@ -37,6 +52,7 @@ def new_user(request):
         if group_name:
             try:
                 group = Group.objects.get(name=group_name)
+                print(group)
                 user.groups.add(group)
             except Group.DoesNotExist:
                 messages.warning(request, "Grupo não encontrado.")
@@ -55,6 +71,43 @@ def new_user(request):
 
     context = {'groups': groups}
     return render(request, 'users/new_user.html', context)
+
+@login_required
+@user_passes_test(verifica_permissao('auth', 'change_user'),login_url='acesso_negado')
+def edit_user(request, user_id):
+    """Página de edição de usuários."""
+    usuario = get_object_or_404(User, id=user_id)
+    grupos = Group.objects.all()  # Obtém todos os grupos disponíveis
+
+    if request.method == "POST":
+        usuario.username = request.POST["username"]
+        usuario.email = request.POST["email"]
+        group_name = request.POST.get("group", None)
+
+        # Atualiza o grupo do usuário
+        if group_name:
+            novo_grupo = Group.objects.get(name=group_name)
+            usuario.groups.clear()  # Remove o usuário de todos os grupos antes de adicionar ao novo
+            usuario.groups.add(novo_grupo)
+
+        usuario.save()
+        messages.success(request, "Usuário atualizado com sucesso!")
+        return redirect("usuarios")  # Redireciona para a lista de usuários
+
+    context = {
+        "usuario": usuario,
+        "grupos": grupos
+    }
+    return render(request, "users/edit_user.html", context)
+
+@login_required
+@user_passes_test(verifica_permissao('auth', 'view_user'),login_url='acesso_negado')
+def grupos(request):
+    """Página de exibição de grupos e permissões"""
+    grupos = Group.objects.all()
+    context = {'grupos': grupos}
+    return render(request,'users/grupos.html', context)
+
 
 def definir_senha(request, user_id):
     User = get_user_model()
