@@ -24,10 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-g^7&02u^+_i=b*mpwcpf_qk@o4(ljjs2e5udes57r18acu5^-8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 #em produção esse comando vai mudar
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['34.39.136.109.sslip.io']
 
 
 # Application definition
@@ -84,8 +84,8 @@ WSGI_APPLICATION = 'gtechweb.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'gtech',  # Nome do banco
-        'USER': 'postgres',  # Usuário do PostgreSQL
+        'NAME': 'gtech_db',  # Nome do banco
+        'USER': 'admin',  # Usuário do PostgreSQL
         'PASSWORD': 'root',  # Senha do banco
         'HOST': 'localhost',  # Se o banco estiver rodando localmente
         'PORT': '5432',  # Porta padrão do PostgreSQL
@@ -128,7 +128,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = 'https://34.151.247.153.sslip.io/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

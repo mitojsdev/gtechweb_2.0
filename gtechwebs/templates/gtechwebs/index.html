@@ -41,16 +41,63 @@
             font-size: 18px;
             font-weight: bold;
         }
+	/* Estilização das caixas */
+        .tech-boxes {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            /* Espaço entre as caixas */
+            margin-bottom: 20px;
+        }
+
+        .tech-box {
+            width: 80px;
+            height: 80px;
+            background-color: black;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Ajuste das margens para diferenciar os pares */
+        .tech-box:nth-child(1),
+        .tech-box:nth-child(3) {
+            margin-top: 20px;
+        }
+
+        .tech-box:nth-child(2),
+        .tech-box:nth-child(4) {
+            margin-top: 0;
+        }
+	.carousel-inner {
+            width: 40%;
+            /* Reduz o tamanho */
+            height: auto;
+            /* Mantém a proporção */
+            margin: auto;
+            /* Centraliza */
+        }
     </style>
 </head>
 <body>
 
     <!-- Hero Section -->
     <header class="hero">
-        
-        <a class="login" href="{% url 'login' %}">Gerenciar</a>
+        <header class="d-flex flex-column align-items-center justify-content-center">
+            <div class="tech-boxes">
+                <div class="tech-box mt-4">T</div>
+                <div class="tech-box">E</div>
+                <div class="tech-box mt-4">C</div>
+                <div class="tech-box">H</div>
+            </div>
+        </header>
+        <a class="login" href="{% url 'login' %}">Acesso</a>
         <br>
-        <img src="/media/produtos/gtech_logo.png" alt="">
+        <img src="https://34.151.247.153.sslip.io/static/images/gtech_logo.png" alt="logo">
         <p>"Oi, eu sou o GIl!"</p>
     </header>
 
@@ -60,13 +107,13 @@
         <div id="carouselProdutos" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="/media/produtos/stanley.jpg" class="d-block w-100" alt="Garrafa">
+                    <img src="https://34.151.247.153.sslip.io/static/images/stanley.jpg" class="d-block w-100" alt="Garrafa">
                 </div>
                 <div class="carousel-item">
-                    <img src="/media/produtos/xiaomi.jpg" class="d-block w-100" alt="Celular">
+                    <img src="https://34.151.247.153.sslip.io/static/images/xiaomi.jpg" class="d-block w-100" alt="Celular">
                 </div>
                 <div class="carousel-item">
-                    <img src="/media/produtos/compressor.jpg" class="d-block w-100" alt="Utilidades">
+                    <img src="https://34.151.247.153.sslip.io/static/images/compressor.jpg" class="d-block w-100" alt="Utilidades">
                 </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselProdutos" data-bs-slide="prev">
@@ -82,7 +129,7 @@
     <section class="text-center py-5 bg-dark text-light">
         <h2>Quer mais dicas e novidades?</h2>
         <p>Confira nosso canal no YouTube e fique por dentro das últimas tendências e lançamentos.</p>
-        <a href="https://www.youtube.com/seucanal" target="_blank" class="btn btn-danger cta-button">
+        <a href="https://www.youtube.com/@gtechimportsbh" target="_blank" class="btn btn-danger cta-button">
             <i class="bi bi-youtube"></i> Visite nosso canal
         </a>
     </section>
@@ -91,7 +138,7 @@
     <section class="contact-section">
         <h2>Entre em Contato</h2>
         <p>Quer saber mais sobre nossos produtos e serviços? Fale conosco pelo WhatsApp.</p>
-        <a href="https://wa.me/5599999999999" target="_blank" class="btn btn-success cta-button">
+        <a href="https://wa.me/553184339166" target="_blank" class="btn btn-success cta-button">
             <i class="bi bi-whatsapp"></i> Fale Conosco
         </a>
     </section>
